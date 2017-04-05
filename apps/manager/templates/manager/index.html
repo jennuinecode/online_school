@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Login and Registration</title>
+        {% load static %}
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'manager/css/style.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="{% static 'course_app/css/style.css' %}"> -->
+
+    </head>
+<body>
+	{% for message in messages %}
+		<center>{{ message }}</center>
+	{% endfor %}
+
+
+    <body>
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'manager/images/logo.png' %}" width="50px" height="50px"/></a>
+
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <!-- <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form form-inline pull-right" action="{% url 'manager:login' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="email" placeholder="Email">
+                            <input type="password" name="password" placeholder="Password">
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </form>
+                        {% for error in errors %}
+                            {{errors}}
+                        {% endfor %}
+                    </li>
+                    <li>
+                        <form class="navbar-form form-inline pull-right" action="{% url 'manager:registration' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+            </ol>
+    <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img class="img-responsive" src="{% static 'manager/images/hogwarts.jpg' %}"/>
+              </div>
+            </div>
+<!--
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a> -->
+        </div>
+
+
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <center><img class="img-responsive" src="{% static 'manager/images/crest.png' %}" width="300px"/></center>
+                    <center><h1 class="display-3">WELCOME TO HOGWARTS</h1></center>
+
+                    <center><p class="lead">Hogwarts School of Witchcraft and Wizardry is the British wizarding school, located in the Highlands of Scotland. It takes students from the United Kingdom of Great Britain and Northern Ireland, and Ireland.</p></center>
+                </div>
+            </div>
+
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-3 col-lg-3">
+                        <center><img class="img-responsive" src="{% static 'manager/images/gryffindor.jpg' %}" width="300px"/></center>
+                        <p><center><span>
+                                "You might belong in Gryffindor,<br>
+                                Where dwell the brave at heart,<br>
+                                Their daring, nerve, and chivalry<br>
+                                Set Gryffindors apart."<br>
+                        </p></center></span>
+                    </div>
+                    <div class="col-3 col-lg-3">
+                        <center><img class="img-responsive" src="{% static 'manager/images/ravenclaw.jpg' %}" width="300px"/></center>
+                        <p><center><span>
+                            "Or yet in wise old Ravenclaw,<br>
+                            If you've a ready mind,<br>
+                            Where those of wit and learning,<br>
+                            Will always find their kind."<br>
+                        </p></center></span>
+                    </div>
+                    <div class="col-3 col-lg-3">
+                        <center><img class="img-responsive" src="{% static 'manager/images/hufflepuff.jpg' %}" width="300px"/></center>
+                        <p><center><span>
+                            "You might belong in Hufflepuff,<br>
+                            Where they are just and loyal,<br>
+                            Those patient Hufflepuffs are true,<br>
+                            And unafraid of toil."<br>
+                        </p></center></span>
+                    </div>
+                    <div class="col-3 col-lg-3">
+                        <img class="img-responsive" src="{% static 'manager/images/slytherin.jpg' %}" width="300px"/>
+                        <p><center><span>
+                            "Or perhaps in Slytherin,<br>
+                            You'll make your real friends,<br>
+                            Those cunning folk use any means,<br>
+                            To achieve their ends."<br>
+                        </p></center></span>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                </ol>
+
+        <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                  <div class="item active">
+                    <img class="img-responsive" src="{% static 'manager/images/wallpaper.jpg' %}"/>
+                  </div>
+              </div>
+                </a>
+            </div>
+
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

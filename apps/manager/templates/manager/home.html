@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Student | Home</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #707070;
+        text-align: left;
+        padding: 8px;
+    }
+
+    td {
+        border-right: 1px solid #707070;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    button {
+        color: white;
+    }
+    </style>
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <!-- <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul> -->
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <form class="navbar-form form-inline pull-right" action="{% url 'manager:logout' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" id="{{request.session.house}}" class="btn btn-primary">Logout</button>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <center><img class="img-responsive" src="{{static_path}}" width="200px"/></center>
+        <br>
+        <br>
+		<center>Welcome to {{request.session.house}}, {{ request.session.first_name }}.</center>
+
+            <div class="container">
+
+
+                <div class="row main">
+                    <div class="panel-heading">
+                       <div class="panel-title text-center">
+                            <h1 class="title">Create A New Course</h1>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <form class="form-horizontal" method="post" action="{% url 'courses:add' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name" class="cols-lg-2 control-label">Course Name:</label>
+                                <div class="cols-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="name" id="name"  placeholder="Enter Course Name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="cols-lg-2 control-label">Course Description</label>
+                                <div class="cols-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="description" id="description"  placeholder="Enter course description"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <button type="submit" id="{{request.session.house}}" class="btn-lg btn-block login-button">Create Course</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row main">
+                        <div class="col-6 col-lg-6">
+                            <div class="panel-heading">
+                               <div class="panel-title text-center">
+                                    <h1 class="title">Available Courses</h1>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-6">
+                            <div class="panel-heading">
+                               <div class="panel-title text-center">
+                                    <h1 class="title">Student's Courses</h1>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-lg-6">
+                            <table>
+                                <tr>
+                                    <th><h4>Course</h4></th>
+                                    <th><h4>Description</h4></th>
+                                    <th><h4>Date Added</h4></th>
+                                    <th><h4>Action</h4></th>
+                                </tr>
+                                <tr>
+                                {% for course in courses %}
+                                    <td>{{course.name}}</td>
+                                    <td>{{course.description}}</td>
+                                    <td>{{course.created_at}}</td>
+                                    <td>
+                                        <form action="{% url 'courses:remove' course.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group ">
+                                                <button type="submit" id="{{request.session.house}}" class="btn-sm btn-block login-button">Remove</button>
+                                            </div>
+                                        </form>
+                                        <form action="{% url 'courses:join' course.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group ">
+                                                <button type="submit" id="{{request.session.house}}" class="btn-sm btn-block login-button">Join</button>
+                                            </div>
+                                        </form>
+
+                                        <div class="form-group ">
+                                            <a href="{% url 'courses:edit' course.id %}"><button id="{{request.session.house}}" class="btn-sm btn-block login-button">Edit</button></a>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+
+                        <!-- courses registered to the student -->
+                        <div class="col-6 col-lg-6">
+                            <table>
+                                <tr>
+                                    <th><h4>Course</h4></th>
+                                    <th><h4>Description</h4></th>
+                                    <th><h4>Action</h4></th>
+                                </tr>
+                                <tr>
+                                {% for class in classes %}
+                                    <td>{{class.name}}</td>
+                                    <td>{{class.description}}</td>
+                                    <td>
+                                        <form action="{% url 'courses:drop' class.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group ">
+                                                <button type="submit" id="{{request.session.house}}" class="btn-sm btn-block login-button">Drop</button>
+                                            </div>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{% static 'course_app/js/script.js' %}"></script>
+    </body>
+</html>
